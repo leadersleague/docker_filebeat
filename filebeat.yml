@@ -1,0 +1,23 @@
+filebeat:
+  prospectors:
+    - document_type: nginx-error
+      fields: {hostname: test, document_type: nginx-error}
+      ignore_older: 24h
+      input_type: log
+      paths: [/var/log/nginx/error_test.log]
+      tail_files: true
+    - document_type: nginx-access
+      fields: {hostname: test, document_type: nginx-access}
+      ignore_older: 24h
+      input_type: log
+      paths: [/var/log/nginx/access_test.log]
+      tail_files: true
+    - document_type: nodejs
+      fields: {hostname: test, document_type: nodejs}
+      ignore_older: 24h
+      input_type: log
+      paths: [/var/log/app/production.log*]
+      tail_files: true
+
+output:
+  redis: {db: 0, hosts: ["test:66666"], key: filebeat, password: test, timeout: 5}
